@@ -4058,8 +4058,7 @@ static int dwc3_otg_start_host(struct dwc3_msm *mdwc, int on)
 				(mdwc->type_c && !mdwc->no_vbus_vote_type_c))) {
 		mdwc->vbus_reg = devm_regulator_get_optional(mdwc->dev,
 					"vbus_dwc3");
-		if (IS_ERR(mdwc->vbus_reg) &&
-				PTR_ERR(mdwc->vbus_reg) == -EPROBE_DEFER) {
+		if (PTR_ERR(mdwc->vbus_reg) == -EPROBE_DEFER) {
 			/* regulators may not be ready, so retry again later */
 			mdwc->vbus_reg = NULL;
 			return -EPROBE_DEFER;
