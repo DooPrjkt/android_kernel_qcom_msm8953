@@ -509,5 +509,23 @@ config MACH_XIAOMI_VINCE
 	  Support for the Xiaomi Redmi 5 Plus platform
 	  which is based on QCOM MSM8953 chipset.
 
+config TAS2557_REGMAP
+	bool  "Texas Audio TAS2557"
+	depends on MACH_XIAOMI_VINCE
+	help
+	  Support for the Xiaomi Redmi 5 Plus platform.
+
+config TAS2557_CODEC
+	bool  "Texas Audio TAS2557"
+	depends on MACH_XIAOMI_VINCE
+	help
+	  Support for the Xiaomi Redmi 5 Plus platform.
+
+config TAS2557_MISC
+	bool  "Texas Audio TAS2557"
+	depends on MACH_XIAOMI_VINCE
+	help
+	  Support for the Xiaomi Redmi 5 Plus platform.
+
 
 endmenu
