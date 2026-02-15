@@ -509,6 +509,20 @@ config MACH_XIAOMI_VINCE
 	  Support for the Xiaomi Redmi 5 Plus platform
 	  which is based on QCOM MSM8953 chipset.
 
+config MACH_XIAOMI_MIDO
+	bool  "XIAOMI platform"
+	depends on ARCH_MSM8953
+	help
+	  Support for the Xiaomi Redmi Note 4 platform
+	  which is based on QCOM MSM8953 chipset.
+
+config MACH_XIAOMI_OXYGEN
+	bool  "XIAOMI platform"
+	depends on ARCH_MSM8953
+	help
+	  Support for the Xiaomi Mi Max 2 platform
+	  which is based on QCOM MSM8953 chipset.
+
 config TAS2557_REGMAP
 	bool  "Texas Audio TAS2557"
 	depends on MACH_XIAOMI_VINCE
