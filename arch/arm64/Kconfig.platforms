@@ -541,5 +541,12 @@ config TAS2557_MISC
 	help
 	  Support for the Xiaomi Redmi 5 Plus platform.
 
+config SND_SOC_MAX98927
+	bool  "XIAOMI platform"
+	depends on ARCH_MSM8953
+	help
+	  Support for the Xiaomi Redmi 6 Pro platform
+	  which is based on QCOM MSM8953 chipset.
+
 
 endmenu
