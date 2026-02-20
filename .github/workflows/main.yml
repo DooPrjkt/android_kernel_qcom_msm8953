@@ -27,15 +27,18 @@ jobs:
 
       - name: Download build script (with token)
         run: |
-          curl -H "Authorization: token ${{ secrets.GIT_TOKEN }}" \
+          curl -H "Authorization: token ${{ secrets.SCRIPT_TOKEN }}" \
                -H "Accept: application/vnd.github+json" \
                -L -o build.sh \
-               https://raw.githubusercontent.com/DooPrjkt/kernel_mido_4.19/build.sh
+               https://raw.githubusercontent.com/DooPrjkt/kernel_mido_4.19/MSM8953_4.19build.sh
+               
           chmod +x build.sh
+          head -n 5 build sh
 
       - name: Building Kernel
         env:
           CHATID: ${{ secrets.CHATID }}
           API_BOT: ${{ secrets.BOT_API }}
+          SCRIPT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           bash build.sh
