@@ -1,0 +1,41 @@
+name: mido-main
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setting up env
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git make bc bison flex ccache \
+            openssl curl zip kmod cpio \
+            libelf-dev libssl-dev wget \
+            device-tree-compiler \
+            ca-certificates python3 \
+            gcc-arm-linux-gnueabi \
+            gcc-aarch64-linux-gnu \
+            binutils-arm-linux-gnueabi \
+            binutils-aarch64-linux-gnu
+
+      - name: Download build script (with token)
+        run: |
+          curl -H "Authorization: token ${{ secrets.GIT_TOKEN }}" \
+               -H "Accept: application/vnd.github+json" \
+               -L -o build.sh \
+               https://raw.githubusercontent.com/DooPrjkt/kernel_mido_4.19/build.sh
+          chmod +x build.sh
+
+      - name: Building Kernel
+        env:
+          CHATID: ${{ secrets.CHATID }}
+          API_BOT: ${{ secrets.BOT_API }}
+        run: |
+          bash build.sh
