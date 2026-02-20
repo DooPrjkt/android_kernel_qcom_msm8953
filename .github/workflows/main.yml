@@ -33,7 +33,7 @@ jobs:
                https://raw.githubusercontent.com/DooPrjkt/kernel_mido_4.19/MSM8953_4.19/build.sh
                
           chmod +x build.sh
-          head -n 5 build sh
+          head -n 5 build.sh
 
       - name: Building Kernel
         env:
