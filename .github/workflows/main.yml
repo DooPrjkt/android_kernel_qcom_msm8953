@@ -30,7 +30,7 @@ jobs:
           curl -H "Authorization: token ${{ secrets.SCRIPT_TOKEN }}" \
                -H "Accept: application/vnd.github+json" \
                -L -o build.sh \
-               https://raw.githubusercontent.com/DooPrjkt/kernel_mido_4.19/MSM8953_4.19build.sh
+               https://raw.githubusercontent.com/DooPrjkt/kernel_mido_4.19/MSM8953_4.19/build.sh
                
           chmod +x build.sh
           head -n 5 build sh
