@@ -15,27 +15,26 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # 🔔 Notify Telegram (Build Started)
+      # Optional test
+      - name: Test Actions
+        run: echo "Actions working"
+
+      # 🔔 Notify Telegram (Start)
       - name: Notify Telegram (Start)
         env:
           CHATID: ${{ secrets.CHATID }}
           BOT_TOKEN: ${{ secrets.BOT_API }}
         run: |
-          MESSAGE="🚀 *Kernel Build Started!*
-          
-🖥 Repo: ${{ github.repository }}
-🌿 Branch: ${{ github.ref_name }}
-👤 Triggered by: ${{ github.actor }}
-🕒 Time: $(date)
-
-Device: Redmi Note 4 (mido)
-Kernel Branch: MSM8953_4.19
+          MESSAGE="🚀 Kernel Build Started!
+Repo: ${{ github.repository }}
+Branch: ${{ github.ref_name }}
+Triggered by: ${{ github.actor }}
+Time: $(date)
 "
 
           curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
             -d chat_id="$CHATID" \
-            -d text="$MESSAGE" \
-            -d parse_mode="Markdown"
+            -d text="$MESSAGE"
 
       # 2️⃣ Checkout repo build script
       - name: Checkout build scripts
@@ -44,7 +43,7 @@ Kernel Branch: MSM8953_4.19
           repository: DooPrjkt/kernel_mido_4.19
           ref: MSM8953_4.19
           path: scripts
-
+          
       # 3️⃣ Cache ccache
       - name: Cache ccache
         uses: actions/cache@v4
