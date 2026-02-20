@@ -1,0 +1,57 @@
+name: mido-main
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    env:
+      TZ: Asia/Jakarta
+
+    steps:
+      # 1️⃣ Checkout repo utama (misal repo kernel utama kamu)
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # 2️⃣ Checkout repo build script (branch MSM8953_4.19)
+      - name: Checkout build scripts
+        uses: actions/checkout@v4
+        with:
+          repository: DooPrjkt/kernel_mido_4.19
+          ref: MSM8953_4.19
+          path: scripts
+
+      # 3️⃣ Cache ccache (biar build lebih cepat)
+      - name: Cache ccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: ${{ runner.os }}-ccache-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-ccache-
+
+      # 4️⃣ Install dependencies
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git make bc bison flex ccache \
+            openssl curl zip kmod cpio \
+            libelf-dev libssl-dev wget \
+            device-tree-compiler \
+            ca-certificates python3 \
+            gcc-arm-linux-gnueabi \
+            gcc-aarch64-linux-gnu \
+            binutils-arm-linux-gnueabi \
+            binutils-aarch64-linux-gnu
+
+      # 5️⃣ Build kernel
+      - name: Build Kernel
+        env:
+          CHATID: ${{ secrets.CHATID }}
+          API_BOT: ${{ secrets.BOT_API }}
+        run: |
+          chmod +x scripts/build.sh
+          bash scripts/build.sh
