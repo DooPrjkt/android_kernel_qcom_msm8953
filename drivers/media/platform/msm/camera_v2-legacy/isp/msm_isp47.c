@@ -1071,6 +1071,7 @@ int msm_vfe47_start_fetch_engine(struct vfe_device *vfe_dev,
 		mutex_lock(&vfe_dev->buf_mgr->lock);
 		rc = vfe_dev->buf_mgr->ops->get_buf_by_index(
 			vfe_dev->buf_mgr, bufq_handle, fe_cfg->buf_idx, &buf);
+		mutex_unlock(&vfe_dev->buf_mgr->lock);
 		if (rc < 0 || !buf) {
 			pr_err("%s: No fetch buffer rc= %d buf= %pK\n",
 				__func__, rc, buf);
@@ -2615,8 +2616,10 @@ int msm_vfe47_enable_regulators(struct vfe_device *vfe_dev, int enable)
 int msm_vfe47_get_platform_data(struct vfe_device *vfe_dev)
 {
 	int rc = 0;
+#ifndef CONFIG_MACH_XIAOMI_MIDO
 	void __iomem *vfe_fuse_base;
 	uint32_t vfe_fuse_base_size;
+#endif
 
 	vfe_dev->vfe_base = msm_camera_get_reg_base(vfe_dev->pdev, "vfe", 0);
 	if (!vfe_dev->vfe_base)
@@ -2641,6 +2644,7 @@ int msm_vfe47_get_platform_data(struct vfe_device *vfe_dev)
 		rc = -ENOMEM;
 		goto get_res_fail;
 	}
+#ifndef CONFIG_MACH_XIAOMI_MIDO
 	vfe_dev->vfe_hw_limit = 0;
 	vfe_fuse_base = msm_camera_get_reg_base(vfe_dev->pdev,
 					"vfe_fuse", 0);
@@ -2653,6 +2657,7 @@ int msm_vfe47_get_platform_data(struct vfe_device *vfe_dev)
 		msm_camera_put_reg_base(vfe_dev->pdev, vfe_fuse_base,
 				"vfe_fuse", 0);
 	}
+#endif
 	rc = vfe_dev->hw_info->vfe_ops.platform_ops.get_regulators(vfe_dev);
 	if (rc)
 		goto get_regulator_fail;
