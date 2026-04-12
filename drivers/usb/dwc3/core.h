@@ -656,7 +656,6 @@
 
 struct dwc3_trb;
 
-#ifdef CONFIG_USB_DWC3_MSM_LEGACY
 /**
  * struct dwc3_gadget_ep_cmd_params - representation of endpoint command
  * parameters
@@ -669,7 +668,6 @@ struct dwc3_gadget_ep_cmd_params {
 	u32	param1;
 	u32	param0;
 };
-#endif
 
 /**
  * struct dwc3_event_buffer - Software event buffer representation
